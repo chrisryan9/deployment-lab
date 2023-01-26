@@ -265,7 +265,10 @@ module.exports = {
             rollbar.info('City has been created.')
             return res.status(200).send(dbRes[0])
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            rollbar.error(err);
+            console.log(err)
+        })    
     },
 
     getCities: (req, res) => {
