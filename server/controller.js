@@ -4,6 +4,17 @@ const { ACCESS_TOKEN } = process.env
 
 const Sequelize = require('sequelize');
 
+// include and initialize the rollbar library with your access token
+var Rollbar = require('rollbar')
+var rollbar = new Rollbar({
+  accessToken: `${ACCESS_TOKEN}`,
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+})
+
+// record a generic message and send it to Rollbar
+rollbar.log('Hello world!')
+
 const sequelize = new Sequelize(CONNECTION_STRING, {
     dialect: 'postgres',
     dialectOptions: {
@@ -249,8 +260,11 @@ module.exports = {
         INSERT INTO cities (name, rating, country_id)
         VALUES ('${name}', '${rating}', '${countryId}');
         `)
-        rollbar.info('City has been created.')
-        .then(dbRes => res.status(200).send(dbRes[0]))
+        
+        .then(dbRes => { 
+            rollbar.info('City has been created.')
+            return res.status(200).send(dbRes[0])
+        })
         .catch(err => console.log(err))
     },
 
