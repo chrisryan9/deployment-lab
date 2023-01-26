@@ -18,7 +18,7 @@ function handleSubmit(e) {
         countryId: +countrySelect.value
     }
 
-    axios.post('http://localhost:4040/cities', body)
+    axios.post('http://ec2-18-236-129-161.us-west-2.compute.amazonaws.com/cities', body)
         .then(() => {
             countrySelect.value = 1
             nameInput.value = ''
@@ -28,7 +28,7 @@ function handleSubmit(e) {
 }
 
 function deleteCard(id) {
-    axios.delete(`http://localhost:4040/cities/${id}`)
+    axios.delete(`http://ec2-18-236-129-161.us-west-2.compute.amazonaws.com/cities/${id}`)
         .then(() => getCities())
         .catch(err => console.log(err))
 }
@@ -36,7 +36,7 @@ function deleteCard(id) {
 function getCities() {
     countryList.innerHTML = ''
 
-    axios.get('http://localhost:4040/cities/')
+    axios.get('http://ec2-18-236-129-161.us-west-2.compute.amazonaws.com/cities/')
         .then(res => {
             res.data.forEach(elem => {
                 let countryCard = `<div class="country-card">
@@ -52,7 +52,7 @@ function getCities() {
 }
 
 function getCountries() {
-    axios.get('http://localhost:4040/countries')
+    axios.get('http://ec2-18-236-129-161.us-west-2.compute.amazonaws.com/countries')
         .then(res => {
             res.data.forEach(country => {
                 const option = document.createElement('option')
