@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { CONNECTION_STRING } = process.env;
+const { ACCESS_TOKEN } = process.env
 
 const Sequelize = require('sequelize');
 
@@ -248,6 +249,7 @@ module.exports = {
         INSERT INTO cities (name, rating, country_id)
         VALUES ('${name}', '${rating}', '${countryId}');
         `)
+        rollbar.info('City has been created.')
         .then(dbRes => res.status(200).send(dbRes[0]))
         .catch(err => console.log(err))
     },
